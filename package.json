@@ -1,0 +1,38 @@
+{
+  "name": "my-starter-ts-npm-cli-and-lib",
+  "version": "0.1.2-0",
+  "description": "Typescript で CLI とライブラリの npm パッケージを作成するためのスターター。",
+  "license": "MIT",
+  "keywords": [],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "bin": {
+    "count": "dist/main.js"
+  },
+  "scripts": {
+    "start": "tsc && node dist/main.js",
+    "start:watch": "nodemon --watch src --ext ts --exec ts-node src/main.ts",
+    "build": "tsc",
+    "test": "jest",
+    "clean": "rm dist/*",
+    "upgrade-interactive": "npm-check --update",
+    "csb:test": "npm test -- --runInBand --watchAll"
+  },
+  "dependencies": {
+    "yargs": "^16.2.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.23",
+    "@types/node": "^14.14.28",
+    "@types/yargs": "^16.0.1",
+    "jest": "^26.6.3",
+    "nodemon": "^2.0.7",
+    "npm-check": "^5.9.2",
+    "ts-jest": "^26.5.5",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.4"
+  }
+}
