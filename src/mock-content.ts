@@ -121,21 +121,25 @@ export default function mockContent() {
 
   return {
     $content: mockContent,
-    mockResponse: (res: any): ChainList => {
+    mockResponse: (res: any): Promise<ChainList> => {
       const [chain, resolve] = fetchQue.shift();
       if (chain === undefined || resolve === undefined) {
         throw new Error('No request to respond to!');
       }
       resolve(res);
-      return setupChainList(chain);
+      return new Promise((resolve) =>
+        setImmediate(() => resolve(setupChainList(chain)))
+      );
     },
-    mockError: (reason: any): ChainList => {
+    mockError: (reason: any): Promise<ChainList> => {
       const [chain, _resolve, reject] = fetchQue.shift();
       if (chain === undefined || reject === undefined) {
         throw new Error('No request to respond to!');
       }
       reject(reason);
-      return setupChainList(chain);
+      return new Promise((resolve) =>
+        setImmediate(() => resolve(setupChainList(chain)))
+      );
     }
   };
 }
