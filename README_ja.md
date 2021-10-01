@@ -1,8 +1,9 @@
 # jest-mock-nuxt-content
 
-[nuxt-content](https://content.nuxtjs.org/) mock for [jest](https://jestjs.io/),
+[jest](https://jestjs.io/) 用 [nuxt-content](https://content.nuxtjs.org/) の mock。
 
-jest-mock-nuxt-content is inspired by [jest-mock-axios](https://www.npmjs.com/package/jest-mock-axios).
+jest-mock-nuxt-content は [jest-mock-axios](https://www.npmjs.com/package/jest-mock-axios) を参考にしています。
+
 
 ## Install
 
@@ -18,13 +19,13 @@ $ yarn add --dev @hankei6km/jest-mock-nuxt-content
 
 ## Usage
 
-Basic flow.
+基本的な流れ。
 
-- `fetch()` has been called in`asyncData`(waiting mock data)
-- ensure `$content` has been called with content path etc.
-- pass mock data via `context.mockResponse()` to waiting `fetch()` and receive chain list (history to called [methods](https://content.nuxtjs.org/fetching))
-- ensure chain list
-- fimaly, vverify a return value from `asyncData()`
+- `asyncData` 内で `fetch()` が実行される(モックデータ待ちになる)
+- `$content` を検証する
+- `context.mockResponse` でモックデータを渡し、[メソッド](https://content.nuxtjs.org/fetching) のチェインリスト(モックメソッドの実行履歴)を受け取る
+- チェインリストを検証する
+- 最終的に `asyncData` の戻り値を検証する
 
 
 ```typescript
@@ -105,20 +106,20 @@ describe('IndexPage', () => {
 
 ### `mockContent()`
 
-return instance of `content`.
+`content` インスタンスの生成。
 
 ### `content.$content`
 
-entry point of mocked methods for inject into the context.
+コンテキストへ挿入するモックのエントリーポイント。
 
 ### `content.mockResponse(res)`
 
-- pass mock data to `fetch()` that is waiting response data
-- return the chain list made when `fetch()` has been called
+- 結果を待っている `fetch` へ返信データを渡す
+- `fetch()` 実行時のチェインリストを返す
 
 #### `res`
 
-mock data to `fetch()`.
+`fetch` へ渡す返信データ。
 
 #### returns
 
@@ -126,12 +127,12 @@ mock data to `fetch()`.
 
 ### `content.mockError(reason)`
 
-- recject `fetch()` that is waiting response data 
-- return the chain list made when `fetch()` has been called
+- 結果を待っている `fetch` を reject する
+- `fetch()` 実行時のチェインリストを返す
 
 #### `reason`
 
-reason to reject.
+reject する理由。
 
 #### returns
 
@@ -139,7 +140,7 @@ reason to reject.
 
 ### `ChainList.count()`
 
-count of called mocked methods.
+実行されたメソッドの個数。
 
 #### returns
 
@@ -147,11 +148,11 @@ count of called mocked methods.
 
 ### `ChainList.at(idx)`
 
-return mocked method at passed index.
+指定位置のモックメソッドを返す。
 
 ### `idx`
 
-index of mocked method.
+モックメソッドの位置。
 
 ### returns
 
@@ -160,12 +161,12 @@ index of mocked method.
 
 ### `ChainList.find(name)`
 
-return the first mocked method found.
-error thrown if mocked method could not be found.
+見つかった最初のモックメソッドを返す。
+メソッドが見つからないときはエラーを throw する。
 
 ### `name`
 
-name of mocked method.
+モックメソッドの名前。
 
 ### returns
 
@@ -174,19 +175,19 @@ name of mocked method.
 
 ### `ChainList.findAll(name)`
 
-return all mocked methods found.
-return empty array if mocked method could not be found.
+見つかったすべてのモックメソッドを返す。
+メソッドが見つからないときは空の配列を返す。
 
 ### `name`
 
-name of mocked method.
+モックメソッドの名前。
 
 ### returns
 
 `jest.Mock<any ,any>[]`
 
 
-## License
+## ライセンス
 
 MIT License
 
