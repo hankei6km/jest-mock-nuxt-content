@@ -18,8 +18,8 @@ type Chain = ChainItem[];
 type ChainList = {
   count: () => number;
   at: (idx: number) => ChainItem;
-  find: (name: string) => ChainItem;
-  findAll: (name: string) => ChainList;
+  find: (name: MockNames) => ChainItem;
+  findAll: (name: MockNames) => ChainList;
 };
 function setupChainList(chain: Chain): ChainList {
   return {
@@ -29,14 +29,14 @@ function setupChainList(chain: Chain): ChainList {
     at(idx: number): ChainItem {
       return chain[idx];
     },
-    find(name: string): ChainItem {
+    find(name: MockNames): ChainItem {
       const idx = chain.findIndex((c) => c.getMockName() === name);
       if (idx < 0) {
         throw new Error(`${name} mock is not exist in chain`);
       }
       return chain[idx];
     },
-    findAll(name: string): ChainList {
+    findAll(name: MockNames): ChainList {
       return setupChainList(chain.filter((c) => c.getMockName() === name));
     }
   };
