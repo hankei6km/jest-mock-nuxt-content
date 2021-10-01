@@ -129,6 +129,9 @@ describe('mockContent', () => {
     const chain3 = await content.mockResponse({
       description: mockDataBlog[2].description
     });
+    expect($content).toHaveBeenCalledWith('blog', 'id1');
+    expect($content).toHaveBeenCalledWith('blog', 'id2');
+    expect($content).toHaveBeenCalledWith('blog', 'id3');
     expect(chain1.at(0).getMockName()).toEqual('only');
     expect(chain1.at(0)).toHaveBeenCalledWith(['title']);
     expect(chain2.at(0).getMockName()).toEqual('only');
