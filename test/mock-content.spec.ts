@@ -27,12 +27,19 @@ describe('mockContent', () => {
       .fetch();
     const chain = await content.mockResponse(mockDataBlog);
     expect(chain.count()).toEqual(3);
+
     expect(chain.at(0).getMockName()).toEqual('sortBy');
-    expect(chain.at(0)).toHaveBeenCalledWith('id');
+    expect(chain.at(0)).toHaveBeenCalledTimes(1);
+    expect(chain.at(0)).toHaveBeenLastCalledWith('id');
+
     expect(chain.at(1).getMockName()).toEqual('only');
-    expect(chain.at(1)).toHaveBeenCalledWith(['title']);
+    expect(chain.at(1)).toHaveBeenCalledTimes(1);
+    expect(chain.at(1)).toHaveBeenLastCalledWith(['title']);
+
     expect(chain.at(2).getMockName()).toEqual('sortBy');
-    expect(chain.at(2)).toHaveBeenCalledWith('title');
+    expect(chain.at(2)).toHaveBeenCalledTimes(1);
+    expect(chain.at(2)).toHaveBeenLastCalledWith('title');
+
     expect(await res).toEqual(mockDataBlog);
   });
 

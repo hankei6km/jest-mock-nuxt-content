@@ -78,16 +78,18 @@ function setupMocks(chain: Chain, fetch: MockFn): Mocks & { fetch: MockFn } {
     surround: jest.fn()
   };
   MockNamesValues.forEach((k) => {
-    const fn = mocks[k];
-    fn.mockReset()
-      .mockName(k)
-      .mockImplementation(() => {
-        chain.push(fn);
-        return {
-          ...mocks,
-          fetch
-        };
-      });
+    let fn = mocks[k];
+    const impl = function () {
+      fn.mockName(k);
+      chain.push(fn);
+      fn = jest.fn(impl);
+      mocks[k] = fn;
+      return {
+        ...mocks,
+        fetch
+      };
+    };
+    fn.mockImplementation(impl);
   });
   return {
     ...mocks,
