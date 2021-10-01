@@ -1,5 +1,5 @@
 {
-  "name": "jest-mock-nuxt-content",
+  "name": "@hankei6km/jest-mock-nuxt-content",
   "version": "0.1.0",
   "description": "nuxt-content mock for jest",
   "author": "hankei6km <hankei6km@gmail.com> (https://github.com/hankei6km)",
