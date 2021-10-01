@@ -133,11 +133,14 @@ describe('mockContent', () => {
     expect($content).toHaveBeenCalledWith('blog', 'id2');
     expect($content).toHaveBeenCalledWith('blog', 'id3');
     expect(chain1.at(0).getMockName()).toEqual('only');
-    expect(chain1.at(0)).toHaveBeenCalledWith(['title']);
+    expect(chain1.at(0)).toHaveBeenCalledTimes(1);
+    expect(chain1.at(0)).toHaveBeenLastCalledWith(['title']);
     expect(chain2.at(0).getMockName()).toEqual('only');
-    expect(chain2.at(0)).toHaveBeenCalledWith(['id']);
+    expect(chain2.at(0)).toHaveBeenCalledTimes(1);
+    expect(chain2.at(0)).toHaveBeenLastCalledWith(['id']);
     expect(chain3.at(0).getMockName()).toEqual('only');
-    expect(chain3.at(0)).toHaveBeenCalledWith(['description']);
+    expect(chain3.at(0)).toHaveBeenCalledTimes(1);
+    expect(chain3.at(0)).toHaveBeenLastCalledWith(['description']);
     expect(await Promise.all([res1, res2, res3])).toEqual([
       { title: mockDataBlog[0].title },
       { id: mockDataBlog[1].id },
