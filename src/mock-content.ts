@@ -130,7 +130,9 @@ export default function mockContent() {
       }
       resolve(res);
       return new Promise((resolve) =>
-        setImmediate(() => resolve(setupChainList(chain)))
+        // setImmediate is not defined in jsdom env.
+        // setImmediate(() => resolve(setupChainList(chain)))
+        setTimeout(() => resolve(setupChainList(chain)), 0)
       );
     },
     mockError: (reason: any): Promise<ChainList> => {
@@ -140,7 +142,7 @@ export default function mockContent() {
       }
       reject(reason);
       return new Promise((resolve) =>
-        setImmediate(() => resolve(setupChainList(chain)))
+        setTimeout(() => resolve(setupChainList(chain)), 0)
       );
     }
   };
