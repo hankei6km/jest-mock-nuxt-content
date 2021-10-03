@@ -22,7 +22,7 @@ Basic flow.
 
 - `fetch()` has been called in`asyncData`(waiting mock data)
 - ensure `$content` has been called with content path etc.
-- pass mock data via `context.mockResponse()` to waiting `fetch()` and receive chain list (history to called [methods](https://content.nuxtjs.org/fetching))
+- pass mock data via `context.mockResponse()` to waiting `fetch()` and receive chain list of [methods](https://content.nuxtjs.org/fetching)(history to chain sequence)
 - ensure chain list
 - fimaly, vverify a return value from `asyncData()`
 

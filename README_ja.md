@@ -23,8 +23,8 @@ $ yarn add --dev @hankei6km/jest-mock-nuxt-content
 
 - `asyncData` 内で `fetch()` が実行される(モックデータ待ちになる)
 - `$content` を検証する
-- `context.mockResponse` でモックデータを渡し、[メソッド](https://content.nuxtjs.org/fetching) のチェインリスト(モックメソッドの実行履歴)を受け取る
-- チェインリストを検証する
+- `context.mockResponse` でモックデータを渡し、[メソッド](https://content.nuxtjs.org/fetching) のチェーンリスト(チェーンシーケンスの実行履歴)を受け取る
+- チェーンリストを検証する
 - 最終的に `asyncData` の戻り値を検証する
 
 
@@ -115,7 +115,7 @@ describe('IndexPage', () => {
 ### `content.mockResponse(res)`
 
 - 結果を待っている `fetch` へ返信データを渡す
-- `fetch()` 実行時のチェインリストを返す
+- `fetch()` 実行時のチェーンリストを返す
 
 #### `res`
 
@@ -128,7 +128,7 @@ describe('IndexPage', () => {
 ### `content.mockError(reason)`
 
 - 結果を待っている `fetch` を reject する
-- `fetch()` 実行時のチェインリストを返す
+- `fetch()` 実行時のチェーンリストを返す
 
 #### `reason`
 
