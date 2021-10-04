@@ -13,6 +13,7 @@ const MockNamesValues = [
 type MockNames = typeof MockNamesValues[number];
 type Mocks = Record<MockNames, MockFn>;
 
+type ChainSeq = Mocks & { fetch: MockFn };
 type ChainItem = MockFn;
 type Chain = ChainItem[];
 type ChainList = {
@@ -66,7 +67,7 @@ function setupFetchQue() {
   };
 }
 
-function setupMocks(chain: Chain, fetch: MockFn): Mocks & { fetch: MockFn } {
+function setupMocks(chain: Chain, fetch: MockFn): ChainSeq {
   const mocks: Mocks = {
     only: jest.fn(),
     without: jest.fn(),
@@ -78,7 +79,7 @@ function setupMocks(chain: Chain, fetch: MockFn): Mocks & { fetch: MockFn } {
     surround: jest.fn()
   };
   MockNamesValues.forEach((k) => {
-    const impl = function (): Mocks & { fetch: MockFn } {
+    const impl = function (): ChainSeq {
       mocks[k].mockName(k);
       chain.push(mocks[k]);
       mocks[k] = jest.fn(impl);
