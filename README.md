@@ -20,12 +20,12 @@ $ yarn add --dev @hankei6km/jest-mock-nuxt-content
 
 Basic flow.
 
+- call `asyncData` with injecting mock(`$content`)
 - `fetch()` has been called in`asyncData`(waiting mock data)
 - ensure `$content` has been called with content path etc.
 - pass mock data via `context.mockResponse()` to waiting `fetch()` and receive chain list of [methods](https://content.nuxtjs.org/fetching)(history to chain sequence)
 - ensure chain list
-- fimaly, vjrify a return value from `asyncData()`
-
+- fimaly, verify a return value from `asyncData()`
 
 ```typescript
 // pages/index.vue
@@ -62,7 +62,10 @@ describe('IndexPage', () => {
     })
     if (wrapperAsyncData.vm.$options.asyncData) {
       // Note: this flow diffrent from [Nuxt lifecycle](https://nuxtjs.org/docs/concepts/nuxt-lifecycle).
-      const data = vm.$options.asyncData({ $content, params: {} } as any)
+      const data = wrapperAsyncData.vm.$options.asyncData({
+        $content,
+        params: {},
+      } as any)
 
       // ensure frist fetch() called
       expect($content).toHaveBeenLastCalledWith('pages/home')

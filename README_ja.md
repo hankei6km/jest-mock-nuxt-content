@@ -64,7 +64,10 @@ describe('IndexPage', () => {
     })
     if (wrapperAsyncData.vm.$options.asyncData) {
       // 注意: これは [Nuxt のライフサイクル](https://nuxtjs.org/docs/concepts/nuxt-lifecycle) とは異なる挙動です。
-      const data = vm.$options.asyncData({ $content, params: {} } as any)
+      const data = wrapperAsyncData.vm.$options.asyncData({
+        $content,
+        params: {},
+      } as any)
 
       // ensure frist fetch() called
       expect($content).toHaveBeenLastCalledWith('pages/home')
