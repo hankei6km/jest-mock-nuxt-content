@@ -24,7 +24,7 @@ Basic flow.
 - ensure `$content` has been called with content path etc.
 - pass mock data via `context.mockResponse()` to waiting `fetch()` and receive chain list of [methods](https://content.nuxtjs.org/fetching)(history to chain sequence)
 - ensure chain list
-- fimaly, vverify a return value from `asyncData()`
+- fimaly, vjrify a return value from `asyncData()`
 
 
 ```typescript
@@ -44,7 +44,6 @@ export default Vue.extend({
 ```typescript
 // test/pages/index.ts
 
-import Vue from 'vue'
 import { shallowMount } from '@vue/test-utils'
 import { mockContent } from '@hankei6km/jest-mock-nuxt-content'
 import indexPage from '~/pages/index.vue'
@@ -55,11 +54,14 @@ describe('IndexPage', () => {
     const $content = content.$content
     const mockDataArticle = { title: 'home' }
     const mockDataImages = [
-      // snip..
+        // snip...
     ]
 
-    const vm = new Vue(indexPage)
-    if (vm.$options.asyncData) {
+    const wrapperAsyncData = shallowMount(indexPage, {
+        // snip...
+    })
+    if (wrapperAsyncData.vm.$options.asyncData) {
+      // Note: this flow diffrent from [Nuxt lifecycle](https://nuxtjs.org/docs/concepts/nuxt-lifecycle).
       const data = vm.$options.asyncData({ $content, params: {} } as any)
 
       // ensure frist fetch() called
@@ -79,25 +81,19 @@ describe('IndexPage', () => {
       })
 
       // render actual page by using mock data from asyncData()
-      // 注意: これは [Nuxt のライフサイクル](https://nuxtjs.org/docs/concepts/nuxt-lifecycle) とは異なる挙動です。
+      // Note: this flow diffrent from [Nuxt lifecycle](https://nuxtjs.org/docs/concepts/nuxt-lifecycle).
       const mockData = await data
       const wrapper = shallowMount(indexPage, {
         data() {
           return mockData
         },
-        stubs: {
-          ToGallery: true,
-          NuxtContent: true,
-          NuxtImg: true,
-          ImageTiles: true,
-        },
+        // snip...
       })
 
       // snip..
     }
   })
 })
-
 ```
 
 ## API

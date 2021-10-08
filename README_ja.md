@@ -21,6 +21,7 @@ $ yarn add --dev @hankei6km/jest-mock-nuxt-content
 
 基本的な流れ。
 
+- モック('$content') を引数として `asyncData` を呼びだす
 - `asyncData` 内で `fetch()` が実行される(モックデータ待ちになる)
 - `$content` を検証する
 - `context.mockResponse` でモックデータを渡し、[メソッド](https://content.nuxtjs.org/fetching) のチェーンリスト(チェーンシーケンスの実行履歴)を受け取る
@@ -45,7 +46,6 @@ export default Vue.extend({
 ```typescript
 // test/pages/index.ts
 
-import Vue from 'vue'
 import { shallowMount } from '@vue/test-utils'
 import { mockContent } from '@hankei6km/jest-mock-nuxt-content'
 import indexPage from '~/pages/index.vue'
@@ -56,11 +56,14 @@ describe('IndexPage', () => {
     const $content = content.$content
     const mockDataArticle = { title: 'home' }
     const mockDataImages = [
-      // snip..
+        // snip...
     ]
 
-    const vm = new Vue(indexPage)
-    if (vm.$options.asyncData) {
+    const wrapperAsyncData = shallowMount(indexPage, {
+        // snip...
+    })
+    if (wrapperAsyncData.vm.$options.asyncData) {
+      // 注意: これは [Nuxt のライフサイクル](https://nuxtjs.org/docs/concepts/nuxt-lifecycle) とは異なる挙動です。
       const data = vm.$options.asyncData({ $content, params: {} } as any)
 
       // ensure frist fetch() called
@@ -86,19 +89,13 @@ describe('IndexPage', () => {
         data() {
           return mockData
         },
-        stubs: {
-          ToGallery: true,
-          NuxtContent: true,
-          NuxtImg: true,
-          ImageTiles: true,
-        },
+        // snip...
       })
 
       // snip..
     }
   })
 })
-
 ```
 
 ## API
