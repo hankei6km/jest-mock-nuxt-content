@@ -1,2 +1,2 @@
-import countChars from './count';
-export { countChars };
+import mockContent from './mock-content';
+export { mockContent };
